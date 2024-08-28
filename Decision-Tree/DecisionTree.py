@@ -25,15 +25,12 @@ class DecisionTree:
         self.root = None # root of DT
         
 
-
-
     def fit(self, X, y):
         #total number of features of DT <= number of features in data
         self.n_features = X.shape[1] if self.n_features is None else min(X.shape[1], self.n_features)
         self.root = self._grow_tree(X, y)
 
 
-    
     def _grow_tree(self, X, y, depth = 0):
 
         n_samples, n_feats = X.shape
@@ -58,8 +55,6 @@ class DecisionTree:
 
         return Node(best_feature, best_thresh, left, right)
             
-
-
 
     def _most_common_label(self, y):
         counter = Counter(y)
@@ -121,17 +116,14 @@ class DecisionTree:
         information_gain = parent_entropy - child_entropy
         return information_gain
 
-        
-
 
     def _split(self, X_column, split_thres):
+        #splitting the data samples based on feature (in current node) and on the basis of threshold
         left_idxs = np.argwhere(X_column <= split_thres).flatten()
         right_idxs = np.argwhere(X_column > split_thres).flatten()
         return left_idxs, right_idxs
         
-
-
-        
+       
     def _entropy(self, X):
         labels = np.unique(X)
         counter = Counter(X)
@@ -148,13 +140,10 @@ class DecisionTree:
          return np.array([self._traverse_tree(x, self.root) for x in X])
 
 
-
-
     def _traverse_tree(self, X, node):
         if (node.is_leaf_node()):
             return node.value
-
-
+            
         #traversing the tree based on values in sample data
         if( X[node.feature] <= node.threshold):
             return self._traverse_tree(X, node.left)
