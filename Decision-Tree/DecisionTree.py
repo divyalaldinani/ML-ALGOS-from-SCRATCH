@@ -44,6 +44,8 @@ class DecisionTree:
             return Node(value = leaf_value)
 
         #find the best split among all
+        #below line selects 'self.n_features' number of unique feature indices from the range [0, n_feats) without replacement.
+        #without replacement means that each idx can be selected at most once
         features = np.random.choice(n_feats, self.n_features, replace=False)
         best_feature, best_thresh = self._best_split(X, y, features)
 
